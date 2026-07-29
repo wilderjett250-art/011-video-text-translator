@@ -1,0 +1,31 @@
+{
+  "name": "video-text-translator",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Desktop tool for replacing burned-in foreign video text with translated overlays.",
+  "main": "apps/desktop/main.cjs",
+  "scripts": {
+    "dev": "concurrently -n api,ui -c blue,green \"pnpm dev:api\" \"pnpm dev:ui\"",
+    "dev:api": "python -m uvicorn backend.app.main:app --host 127.0.0.1 --port 8791 --reload",
+    "dev:ui": "vite --config apps/client/vite.config.ts --host 127.0.0.1 --port 8790",
+    "desktop": "electron apps/desktop/main.cjs",
+    "build": "vite build --config apps/client/vite.config.ts",
+    "validate": "tsc --project apps/client/tsconfig.json --noEmit && python -m compileall backend"
+  },
+  "dependencies": {
+    "@vitejs/plugin-react": "^4.7.0",
+    "lucide-react": "^0.468.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "concurrently": "^9.2.1",
+    "electron": "^31.7.7",
+    "typescript": "^5.5.4",
+    "vite": "^5.4.21"
+  },
+  "packageManager": "pnpm@11.7.0"
+}
+
