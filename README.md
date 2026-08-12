@@ -1,150 +1,56 @@
-# 011 Video Text Translator / 视频字幕替换翻译桌面工具
+# 011 视频文字替换与翻译 | Video Text Translator
 
-Video Text Translator 是一个面向 Windows 的桌面软件项目，用于把视频中已经烧录到画面里的外语文字，替换成新的翻译叠加文本，并导出新的 MP4 文件。
+> 识别视频画面中的文字，翻译后重新合成一份可交付视频。
+>
+> **English:** A practical, runnable project with a documented workflow for the problem described above.
 
-这个项目采用“桌面壳 + 网页操作台 + 本地视频引擎”的组合结构：Electron 负责桌面入口，React 负责操作界面，Python 负责视频处理、项目存储、OCR/翻译适配和导出流程。
+## 项目展示 / Demo
 
-## 项目定位
-
-- 项目编号：011
-- 项目类型：桌面应用 / 本地视频处理工具
-- 使用场景：字幕替换、视频本地化、外语视频内容二次编辑
-- 运行平台：Windows
-- 主要技术栈：
-  - Electron
-  - React
-  - TypeScript
-  - Vite
-  - FastAPI
-  - Python
-  - OpenCV / Pillow / FFmpeg 适配
-
-## 核心能力
-
-- 从本地路径或浏览器上传创建项目
-- 解析源视频并提取预览帧
-- 以项目形式保存编辑状态
-- 基于矩形区域定义原文覆盖和译文显示位置
-- 本地生成新的 MP4 输出文件
-- 保留原始源视频，不直接覆盖输入文件
-- 音频存在时保留音轨并完成重新封装
-- OCR 与翻译能力采用适配器方式组织，便于后续切换不同服务
-
-## 目录结构
-
-```text
-apps/
-  client/                 React 操作界面
-  desktop/                Electron 桌面壳
-backend/
-  app/                    FastAPI 服务与视频处理逻辑
-runtime/
-  projects/               本地项目运行目录，占位符已保留
-scripts/
-  start-dev.ps1           开发模式启动脚本
-  start-desktop.ps1       桌面模式启动脚本
-package.json              前端工作区脚本
-requirements.txt          Python 依赖
+```mermaid
+flowchart LR
+ A[视频输入] --> B[画面文字检测]
+ B --> C[翻译/文本校正]
+ C --> D[覆盖合成]
+ D --> E[导出视频]
 ```
 
-## 架构说明
+## 解决什么问题 / Problem
 
-这个项目的实现思路比较清晰，核心是把“操作界面”和“视频引擎”分离：
+解决烧录字幕或画面文字难以批量替换、翻译和保持原画面布局的问题。
 
-1. React 前端负责项目导入、区域选择、参数编辑和任务触发。
-2. Electron 提供桌面容器，让整个工具以本地软件方式运行。
-3. FastAPI 后端提供本地 API，负责视频探测、帧处理、项目持久化和导出任务。
-4. OCR 与翻译逻辑做成适配层，后续接入 PaddleOCR、商业翻译接口或其他本地模型时，不需要重写编辑器主体。
+**English:** This project addresses the problem above with a reproducible local workflow.
 
-这种结构的好处是：
+## 有什么用 / Use
 
-- 界面迭代和视频处理逻辑彼此解耦
-- 本地运行，隐私边界更清楚
-- 适合后续继续扩展 OCR、翻译和导出策略
-- 对单机交付和继续产品化都比较友好
+选择视频后识别文字区域，完成翻译、覆盖和导出，适合短视频和资料本地化。
 
-## 本地运行
+**English:** Run the workflow locally, inspect the output, and extend the project from the provided source.
 
-安装前端依赖：
+## 高光亮点 / Highlights
 
-```powershell
-pnpm install
-```
+- 桌面端视频处理流程
+- 文字识别与翻译串联
+- 保留视频画面并输出新文件
+- 支持按项目脚本继续扩展
 
-启动前后端开发模式：
+## 技术名词 / Tech
 
-```powershell
-pnpm dev
-```
+`Python · JavaScript · FFmpeg · OCR · Translation API · Node.js`
 
-前端默认地址：
+## 从 ZIP 开始复现 / Reproduce from ZIP
 
-```text
-http://127.0.0.1:8790
-```
+1. 下载 ZIP 并解压。
+2. 安装 requirements.txt 和 package.json 中的依赖。
+3. 按项目根目录脚本启动前端/后端。
+4. 选择测试视频，设置语言和输出目录。
+5. 检查导出的字幕/文字区域和视频文件。
 
-后端默认地址：
+**Expected result:** 运行后以测试视频验证识别、翻译和导出链路；外部翻译服务需要按本地环境配置密钥。
 
-```text
-http://127.0.0.1:8791
-```
+## 目录提示 / Notes
 
-启动桌面壳：
+- 先阅读本 README，再按项目内更详细的中文/英文文档补充配置。
+- 不要把真实密码、Token、数据库业务数据和本机运行结果提交回仓库。
+- 下载 ZIP 后的第一次运行应使用测试数据或示例图片，确认链路正常后再接入自己的环境。
 
-```powershell
-pnpm desktop
-```
-
-## 验证记录
-
-本次归档前已完成以下最小验证：
-
-- `pnpm build` 通过
-- `pnpm validate` 通过
-  - TypeScript 无输出校验通过
-  - Python `compileall` 通过
-
-## 归档说明
-
-本仓库保留的是对继续开发和交付有价值的正式源码内容，不包含以下无必要中间产物：
-
-- `node_modules/`
-- `dist/`
-- 运行期生成的 `runtime/projects/*` 实际项目数据
-- 本地日志与缓存
-
-运行目录结构仍被保留，便于后续继续开发或恢复运行环境。
-
----
-
-## English Overview
-
-Video Text Translator is a Windows desktop application project for replacing burned-in foreign text in videos with translated overlay text and exporting a new MP4 file.
-
-The system is organized as a three-part local architecture:
-
-- Electron for the desktop shell
-- React for the operator interface
-- FastAPI plus Python processing modules for video inspection, storage, OCR adapters, translation adapters, and export jobs
-
-### Main capabilities
-
-- create projects from local files or browser upload
-- inspect source videos and extract preview frames
-- define text replacement regions visually
-- persist project state locally
-- render translated overlays into a new MP4 output
-- preserve the original source file
-- keep and remux audio when present
-- extend OCR and translation providers through adapter-based integration
-
-### Recommended workflow
-
-```powershell
-pnpm install
-pnpm dev
-pnpm build
-pnpm validate
-```
-
-This repository is suitable for continued private development, desktop delivery, and later product hardening around OCR integration, translation provider switching, export control, and packaging.
+[English documentation](README.en.md)
