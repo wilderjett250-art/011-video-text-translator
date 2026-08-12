@@ -1,37 +1,39 @@
-# 011 视频文字替换与翻译 | Video Text Translator
+# 011 视频文字替换与翻译 / Video Text Replacement and Translation
 
-> 识别视频画面中的文字，翻译后重新合成一份可交付视频。
+> 把视频画面中的文字检测、翻译、覆盖和导出串成一条桌面工作流。
 >
-> **English:** A practical, runnable project with a documented workflow for the problem described above.
-
-## 项目展示 / Demo
-
-```mermaid
-flowchart LR
- A[视频输入] --> B[画面文字检测]
- B --> C[翻译/文本校正]
- C --> D[覆盖合成]
- D --> E[导出视频]
-```
+> **English:** A desktop workflow that detects, translates, covers, and exports text embedded in video frames.
 
 ## 解决什么问题 / Problem
 
-解决烧录字幕或画面文字难以批量替换、翻译和保持原画面布局的问题。
+烧录字幕或画面文字难以批量替换，翻译后还容易破坏原画面布局。
 
-**English:** This project addresses the problem above with a reproducible local workflow.
+**English:** Burned-in subtitles and on-screen text are hard to replace in batches, and translation can damage the original layout.
 
-## 有什么用 / Use
+## 项目展示 / Demo
 
-选择视频后识别文字区域，完成翻译、覆盖和导出，适合短视频和资料本地化。
+~~~mermaid
+flowchart LR
+ A[视频输入] --> B[画面文字检测]
+ B --> C[翻译 / 文本校正]
+ C --> D[覆盖与渲染]
+ D --> E[新视频导出]
+~~~
 
-**English:** Run the workflow locally, inspect the output, and extend the project from the provided source.
+从视频输入到新文件导出，保留画面并把文字处理步骤显式化。
+
+**English:** The workflow keeps the video image while making text detection, translation, and rendering explicit.
 
 ## 高光亮点 / Highlights
 
-- 桌面端视频处理流程
-- 文字识别与翻译串联
-- 保留视频画面并输出新文件
-- 支持按项目脚本继续扩展
+- 桌面端视频处理流程。
+  **English:** Desktop video-processing workflow.
+- 文字识别、翻译和覆盖串联。
+  **English:** Chains OCR, translation, and overlay.
+- 保留视频画面并输出新文件。
+  **English:** Preserves the video image and exports a new file.
+- 前后端脚本可继续扩展。
+  **English:** The frontend/backend scripts are extendable.
 
 ## 技术名词 / Tech
 
@@ -39,18 +41,25 @@ flowchart LR
 
 ## 从 ZIP 开始复现 / Reproduce from ZIP
 
-1. 下载 ZIP 并解压。
-2. 安装 requirements.txt 和 package.json 中的依赖。
-3. 按项目根目录脚本启动前端/后端。
-4. 选择测试视频，设置语言和输出目录。
-5. 检查导出的字幕/文字区域和视频文件。
+1. 解压 ZIP，安装 `requirements.txt` 和 `package.json` 中的依赖。
+2. 按项目根目录脚本启动前端/后端。
+3. 选择测试视频，设置语言和输出目录。
+4. 检查识别文字、翻译结果和导出视频。
 
-**Expected result:** 运行后以测试视频验证识别、翻译和导出链路；外部翻译服务需要按本地环境配置密钥。
+**Expected result:** 完成上述步骤后，应能看到项目的页面、窗口、设备输出或测试结果。
 
-## 目录提示 / Notes
+**Expected result:** After these steps, you should see the project's page, window, device output, or test result.
 
-- 先阅读本 README，再按项目内更详细的中文/英文文档补充配置。
-- 不要把真实密码、Token、数据库业务数据和本机运行结果提交回仓库。
-- 下载 ZIP 后的第一次运行应使用测试数据或示例图片，确认链路正常后再接入自己的环境。
+## 范围与安全 / Scope and Safety
 
-[English documentation](README.en.md)
+翻译接口和 FFmpeg 属于运行条件；视频内容、第三方 API Key 和输出文件应使用自己的测试资料。
+
+**English:** The translation API and FFmpeg are runtime requirements; use your own test videos, API keys, and output directory.
+
+## 交流 / Contact
+
+欢迎交流技术。
+
+Open to technical exchange.
+
+[English full version](README.en.md)
